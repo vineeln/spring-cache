@@ -10,7 +10,8 @@ class UrlMappings {
         }
 
         "/"(view:"/index")
-        "500"(view:'/error')
+        // "500"(view:"/error")  error in this was displaying tomcat error page
+        "500"(controller:'error',action: 'handleError')
         "404"(view:'/notFound')
     }
 }

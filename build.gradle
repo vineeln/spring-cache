@@ -47,6 +47,8 @@ dependencies {
     compile "org.hibernate:hibernate-core:5.1.16.Final"
     compile "org.grails.plugins:gsp"
     compile "org.springframework.boot:spring-boot-starter-cache"
+    compile "net.sf.ehcache:ehcache:2.9.0"
+    compile 'org.ehcache:ehcache:3.3.1'
     //console "org.grails:grails-console"
     compile 'org.grails.plugins:grails-console:2.1.1'
     profile "org.grails.profiles:web"

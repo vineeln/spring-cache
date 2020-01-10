@@ -33,4 +33,7 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
     }
     logger("StackTrace", ERROR, ['FULL_STACKTRACE'], false)
 }
-root(ERROR, ['STDOUT'])
+logger('com.spring.OncePerRequestExceptionResolver', INFO)
+logger('org.grails.web.errors.GrailsExceptionResolver',INFO)
+logger('org.springframework.web.servlet.handler.SimpleMappingExceptionResolver',DEBUG)
+root(INFO, ['STDOUT'])
