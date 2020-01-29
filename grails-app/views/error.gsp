@@ -28,5 +28,9 @@
                 <li>An error has occurred</li>
             </ul>
         </g:else>
+    <ul>
+        <li>Name: ${member?.name}</li>
+        <li>address: ${member?.name}</li>
+    </ul>
     </body>
 </html>

@@ -36,4 +36,6 @@ if (Environment.isDevelopmentMode() && targetDir != null) {
 logger('com.spring.OncePerRequestExceptionResolver', INFO)
 logger('org.grails.web.errors.GrailsExceptionResolver',INFO)
 logger('org.springframework.web.servlet.handler.SimpleMappingExceptionResolver',DEBUG)
+logger('org.hibernate.SQL',DEBUG)
+//logger('org.hibernate.type.descriptor.sql',TRACE)
 root(INFO, ['STDOUT'])

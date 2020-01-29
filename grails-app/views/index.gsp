@@ -69,6 +69,15 @@
                     </li>
                 </g:each>
             </ul>
+            <ul>
+                <li>Name: ${member?.name}</li>
+                <%
+                    try{member?.wrongname }catch(Exception x){ out << "xyz" }
+                %>
+
+                <li>address: ${member?.addresses[0].addressLine1}</li>
+            </ul>
+
         </div>
     </section>
 </div>
