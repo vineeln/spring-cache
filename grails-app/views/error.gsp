@@ -31,6 +31,7 @@
     <ul>
         <li>Name: ${member?.name}</li>
         <li>address: ${member?.name}</li>
+        <li>sf: ${sf.currentSession}</li>
     </ul>
     </body>
 </html>

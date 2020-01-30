@@ -1,6 +1,8 @@
 package spring
 
 import groovy.util.logging.Slf4j
+import org.hibernate.Session
+import org.hibernate.SessionFactory
 
 // while processing an error
 //   : exception in view displays "Tomcat Internal error"
@@ -9,6 +11,7 @@ import groovy.util.logging.Slf4j
 @Slf4j
 class HomeController {
 
+    SessionFactory sessionFactory
     SpringCacheService springCacheService
 
     def index() {
@@ -28,9 +31,14 @@ class HomeController {
     }
 
     def viewWithMember() {
+        Session session = sessionFactory.currentSession
+
         MyMember m = springCacheService.findMember("somename")
         request.setAttribute("app.current.member",m)
+
+        log.info("session: ${session}")
         log.info("retrieved member")
-        render view:'/index', model: [member:m]
+        render view:'/index', model: [member:m, sf:sessionFactory]
+        //forward(controller:'error',action:'handleError')
     }
 }

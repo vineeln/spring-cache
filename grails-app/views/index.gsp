@@ -74,8 +74,9 @@
                 <%
                     try{member?.wrongname }catch(Exception x){ out << "xyz" }
                 %>
-
+<li>${member?.wrongname}</li>
                 <li>address: ${member?.addresses[0].addressLine1}</li>
+                <li>sf: ${sf.currentSession}</li>
             </ul>
 
         </div>
