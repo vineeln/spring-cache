@@ -11,12 +11,13 @@ class ErrorController {
 
     def handleError() {
         //throw new MethodNotFoundException("from errorController")
-        log.info("in handleError")
-        MyMember m = request.getAttribute("app.current.member")
-        log.info("session: ${sessionFactory.currentSession}")
-        log.info("is Attached: ${m.isAttached()}");
-        m.attach()
-        log.info("is Attached: ${m.isAttached()}");
         render view:"/error", model:[sf:sessionFactory]
+//        log.info("in handleError")
+//        MyMember m = request.getAttribute("app.current.member")
+//        log.info("session: ${sessionFactory.currentSession}")
+//        log.info("is Attached: ${m.isAttached()}");
+//        m.attach()
+//        log.info("is Attached: ${m.isAttached()}");
+//        render view:"/error", model:[sf:sessionFactory]
     }
 }

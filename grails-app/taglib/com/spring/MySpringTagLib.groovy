@@ -7,6 +7,6 @@ class MySpringTagLib {
     static namespace = "myspring"
 
     def renderEx = { attrs ->
-        //throw new ClassNotFoundException("from renderEx")
+        throw new ClassNotFoundException("from renderEx")
     }
 }

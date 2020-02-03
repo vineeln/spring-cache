@@ -34,7 +34,7 @@ class HomeController {
     def viewWithMember() {
         Session session = sessionFactory.currentSession
 
-        MyMember m = springCacheService.findMember("somename")
+        MyMember m = springCacheService.findFirstMember()
         request.setAttribute("app.current.member",m)
 
         log.info("session: ${session}")
