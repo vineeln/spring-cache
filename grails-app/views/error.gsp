@@ -30,8 +30,8 @@
         </g:else>
     <ul>
         <li>Name: ${member?.name}</li>
-        <li>address: ${member?.name}</li>
-        <li>sf: ${sf.currentSession}</li>
+        <li>address: ${member?.addresses}</li>
+        <li>sf: ${sf?.currentSession}</li>
     </ul>
     </body>
 </html>

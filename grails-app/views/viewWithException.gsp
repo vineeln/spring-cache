@@ -72,6 +72,7 @@
         </div>
     </section>
 </div>
+${someobj.someval}
 <myspring:renderEx/>
 </body>
 </html>
