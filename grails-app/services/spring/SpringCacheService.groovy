@@ -47,6 +47,12 @@ class SpringCacheService {
         return list[0]
     }
 
+    @Transactional(readOnly = true)
+    MyMember findFirstMember() {
+        def list = MyMember.list()
+        return list[0]
+    }
+
     @Transactional
     def updateMember(MyMember member) {
         member.save(flush:true,failOnError:true)
@@ -58,5 +64,10 @@ class SpringCacheService {
         MyAddress address = new MyAddress(addressLine1: 'line1', addressLine2: 'line2')
         m.addToAddresses(address)
         m.save(flush:true,failOnError:true)
+    }
+
+    @Transactional
+    def dummyTransactionMethod() {
+        log.info("In the dummyTransactionMethod")
     }
 }
