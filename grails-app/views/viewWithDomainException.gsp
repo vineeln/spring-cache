@@ -71,6 +71,12 @@
             </ul>
         </div>
     </section>
+    <myspring:renderEx/>
+    <ul>
+        <li>Name: ${member?.name}</li>
+        <li>address: ${member?.addresses}</li>
+        <li>sf: ${sf?.currentSession}</li>
+    </ul>
 </div>
 <myspring:renderEx/>
 </body>

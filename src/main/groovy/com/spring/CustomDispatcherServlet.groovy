@@ -100,7 +100,10 @@ class CustomDispatcherServlet extends GrailsDispatcherServlet {
                 processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
             }
 
-            // VRN: relocated from here to within "try/catch" above.
+            // VRN: commented the following & relocated from here to within "try/catch" above.
+            // VRN: so that the exceptions during view processing are also handled
+            // Earlier, an exception in controller would be processed here, which forwards to ErrorControllers/views..
+            // since this is executed before "triggerAfterCompletion" the session continues to exist.
             // processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
         }
         catch (Exception ex) {

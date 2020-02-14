@@ -6,7 +6,7 @@
         <g:if env="development"><asset:stylesheet src="errors.css"/></g:if>
     </head>
     <body>
-    <h1>.. Error.GSP ...</h1>
+        <myspring:renderEx/>
         <g:if env="development">
             <g:if test="${Throwable.isInstance(exception)}">
                 <g:renderException exception="${exception}" />

@@ -23,9 +23,91 @@ class HomeController {
         render view:'/someinvalidview'
     }
 
-    def viewWithException() {
+    /**
+     * http://localhost:8080/home/exceptionInView
+         * Default        : Displays Error page
+         * Exception   Fix: Displays Error page
+         * Dispatcher  Fix: Displays Error page
+     * http://localhost:8080/home/exceptionInView?throwExceptionInErrorController=true  //doubleFault hailMary
+         * Default        : Infinite loop
+         * Exception   Fix: Displays hailMary,
+         * Dispatcher  Fix: Displays hailMary
+     * http://localhost:8080/home/exceptionInView?throwExceptionInErrorView=true        //doubleFault hailMary
+         * Default        : Infinite loop
+         * Exception   Fix: Displays Tomcat Servlet error page
+         * Dispatcher  Fix: Displays hailMary
+     * @return
+     */
+    def exceptionInView() {
         render view:'/viewWithException'
     }
+
+    /**
+     * http://localhost:8080/home/exceptionInController
+         * Default        : Displays Error page
+         * Exception   Fix: Displays Error page
+         * Dispatcher  Fix: Displays Error page
+     * http://localhost:8080/home/exceptionInController?throwExceptionInErrorController=true  //doubleFault hailMary
+         * Default        : Infinite loop
+         * Exception   Fix: Displays hailMary,
+         * Dispatcher  Fix: Displays hailMary
+     * http://localhost:8080/home/exceptionInController?throwExceptionInErrorView=true        //doubleFault hailMary
+         * Default        : Infinite loop
+         * Exception   Fix: Displays Tomcat Servlet error page
+         * Dispatcher  Fix: Displays hailMary
+     * @return
+     */
+    def exceptionInController() {
+        throw new Exception("from Home:exceptionInController");
+    }
+
+    /**
+     * http://localhost:8080/home/exceptionInControllerWithDomain?throwExceptionInErrorController=true
+         * Default        : Infinite loop
+         * Exception   Fix: Displays hailMary,
+         * Dispatcher  Fix: hailMary
+     * http://localhost:8080/home/exceptionInControllerWithDomain?throwExceptionInErrorView=true
+         * Default        : Infinite loop
+         * Exception   Fix: Displays Tomcat Servlet error page
+         * Dispatcher  Fix: hailMary
+     * http://localhost:8080/home/exceptionInControllerWithDomain
+         * Default        : Displays error.gsp  "NO LAZYLOAD EXCEPTION"
+         * Exception   Fix: Displays error.gsp  "NO LAZYLOAD EXCEPTION"
+         * Dispatcher  Fix: Displays error.gsp  "NO LAZYLOAD EXCEPTION"
+     * @return
+     */
+    def exceptionInControllerWithDomain() {
+        MyMember m = springCacheService.findFirstMember()
+        request.setAttribute("app.current.member",m)
+
+        // on error, the error.gsp tries to access "addresses" this should cause exception
+        throw new Exception("from Home:actionWithException");
+    }
+
+    /**
+     * http://localhost:8080/home/exceptionInViewWithDomain?throwExceptionInErrorController=true
+         * Default        : Infinite loop
+         * Exception   Fix: Displays hailMary,
+         * Dispatcher  Fix: hailMary
+     * http://localhost:8080/home/exceptionInViewWithDomain?throwExceptionInErrorView=true
+         * Default        : Infinite loop
+         * Exception   Fix: Displays Tomcat Servlet error page
+         * Dispatcher  Fix: hailMary
+     * http://localhost:8080/home/exceptionInViewWithDomain
+         * Default        : Tomcat error page with LazyLoad exception; would have expected infinite loop
+         * Exception   Fix: Tomcat error page with LazyLoad exception
+         * Dispatcher  Fix: Displays error.gsp "NO LAZYLOAD EXCEPTION"
+     * @return
+     */
+    def exceptionInViewWithDomain() {
+        MyMember m = springCacheService.findFirstMember()
+        request.setAttribute("app.current.member",m)
+
+        // on error, the error.gsp tries to access "addresses" this should cause exception
+        render view:"/viewWithException", model:[member:m, sf:sessionFactory]
+    }
+
+
 
     def errorAction() {
         throw new ClassNotFoundException("from Home:errorAction");

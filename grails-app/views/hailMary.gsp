@@ -6,7 +6,7 @@
         <g:if env="development"><asset:stylesheet src="errors.css"/></g:if>
     </head>
     <body>
-    <h1>final attempt .. </h1>
+    <h1>HailMary .. final attempt .. </h1>
         <g:if env="development">
             <g:if test="${Throwable.isInstance(exception)}">
                 <g:renderException exception="${exception}" />
