@@ -99,7 +99,7 @@ environments:
     development:
         dataSource:
             url: "jdbc:mysql://localhost/intl_development?zeroDateTimeBehavior=convertToNull"
-            dbCreate: "none"
+            dbCreate: "update"
             driverClassName: "com.mysql.jdbc.Driver"
             dialect: com.care.CustomMySQL5InnoDBDialect
             username: "root"

@@ -1,9 +1,13 @@
 package spring
 
+import com.spring.CustomUtil
 import grails.gorm.transactions.Transactional
+import grails.plugin.springsecurity.annotation.Secured
 import groovy.util.logging.Slf4j
 import org.hibernate.Session
 import org.hibernate.SessionFactory
+import org.springframework.transaction.TransactionStatus
+import org.springframework.transaction.support.DefaultTransactionStatus
 
 // while processing an error
 //   : exception in view displays "Tomcat Internal error"
@@ -15,8 +19,25 @@ class HomeController {
     SessionFactory sessionFactory
     SpringCacheService springCacheService
 
+    @Secured('ROLE_USER')
     def index() {
-        render view:'/index'
+        println "In Controller ++++ "
+        String context="controller"
+        MyUser.findByUsername('controlleruser')
+        MyMember m = MyMember.findByName("controllerMember")
+        m.isAttached()
+        CustomUtil.testSessionInfo(context)
+        springCacheService.logSessionNoTxn(context)
+        List<MyMember> memberList = springCacheService.loadMemberReadOnly(context, request,"controllerMember")
+        CustomUtil.testSessionInfo(context)
+        springCacheService.logSessionWithTransaction(context)
+        CustomUtil.testSessionInfo(context)
+        def user = springCacheService.findLoggedInUser(context)
+        CustomUtil.testSessionInfo(context)
+        CustomUtil.isAttached(context,user)
+        println "In Controller ++++ "
+        println ""
+        render view:'/index', model:[sf:sessionFactory,member:m,memberList:memberList]
     }
 
     def invalidView() {
@@ -174,6 +195,38 @@ class HomeController {
         log.info("is Dirty: ${m.isDirty()}");
         springCacheService.dummyTransactionMethod();  // this should flush & commit member
         render view:'/index', model: [member:m]
+    }
+
+
+    void testSessionInfo() {
+
+        try {
+            MyUser.withSession { Session session ->
+                MyUser user = MyUser.findByUsername('filteruser')
+                println "controller: withSession: id:${session.hashCode()}, flushMode: ${session.flushMode}"// value:${session}"
+            }
+        } catch(Exception x) {
+            println "controller: withSession exception"
+        }
+        try {
+            MyUser.withNewSession { Session session ->
+                MyUser user = MyUser.findByUsername('filteruser')
+                println "controller: withNewSession: id:${session.hashCode()}, flushMode: ${session.flushMode}"// value:${session}"
+            }
+        } catch(Exception x) {
+            println "controller: withSession exception"
+        }
+        try {
+            MyUser.withTransaction { TransactionStatus status ->
+                def txm = ((DefaultTransactionStatus)status).getTransaction()
+                Session session = txm.sessionHolder.session
+                MyUser user = MyUser.findByUsername('filteruser')
+                println "controller: withTransaction: success: id:${session.hashCode()}, flushMode: ${session.flushMode}"// value:${session}"
+            }
+        } catch(Exception x) {
+            println "controller: withTransaction exception"
+        }
+
     }
 
 }

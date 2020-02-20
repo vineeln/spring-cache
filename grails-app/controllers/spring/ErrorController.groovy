@@ -1,15 +1,25 @@
 package spring
 
+import grails.plugin.springsecurity.annotation.Secured
 import groovy.util.logging.Slf4j
 import org.hibernate.SessionFactory
+import org.springframework.security.web.access.ExceptionTranslationFilter
+import org.springframework.security.web.util.ThrowableAnalyzer
 
 import javax.el.MethodNotFoundException
+import javax.servlet.RequestDispatcher
 
 @Slf4j
+@Secured('permitAll')
 class ErrorController {
     SessionFactory sessionFactory
 
+    private ThrowableAnalyzer throwableAnalyzer = new ExceptionTranslationFilter.DefaultThrowableAnalyzer();
+
+    @Secured('IS_AUTHENTICATED_ANONYMOUSLY')
     def handleError() {
+        Throwable t = request.exception ?: request.getAttribute(RequestDispatcher.ERROR_EXCEPTION)
+
         if( params.throwExceptionInErrorController ) {
             throw new MethodNotFoundException("from errorController")
         }

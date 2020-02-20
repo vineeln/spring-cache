@@ -70,12 +70,12 @@
                 </g:each>
             </ul>
             <ul>
+                <g:each var="m" in="${memberList}">
+                    <myspring:renderMember member="${m}" />
+                </g:each>
+            </ul>
+            <ul>
                 <li>Name: ${member?.name}</li>
-                <%
-                    try{member?.wrongname }catch(Exception x){ out << "xyz" }
-                %>
-                <li>${member?.wrongname}</li>
-                <li>address: ${member?.addresses[0].addressLine1}</li>
                 <li>sf: ${sf?.currentSession}</li>
             </ul>
 
