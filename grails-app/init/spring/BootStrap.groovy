@@ -15,6 +15,8 @@ class BootStrap {
             springCacheService.createMember("filterMember")
             springCacheService.createMember("serviceMember")
             springCacheService.createMember("controllerMember")
+            springCacheService.createMember("lazy1")
+            springCacheService.createMember("lazy2")
         }
     }
     def destroy = {

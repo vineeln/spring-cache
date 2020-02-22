@@ -33,6 +33,7 @@ class CustomAnonymousAuthenticationFilter extends GrailsAnonymousAuthenticationF
             // Q. what happens to the domains loaded here & used outside the scope ??  ANS: LazyLoad
         }
         */
+        /*
         println "In Filter: ------"
         String context="filter"
         //findSession()
@@ -51,6 +52,7 @@ class CustomAnonymousAuthenticationFilter extends GrailsAnonymousAuthenticationF
         }
         CustomUtil.testSessionInfo(context)
         println "In Filter: -------"
+        */
 
         super.doFilter(req,res,chain)
     }

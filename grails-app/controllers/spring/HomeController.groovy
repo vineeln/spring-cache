@@ -14,10 +14,33 @@ import org.springframework.transaction.support.DefaultTransactionStatus
 //   : exception in a controller:
 //       will go thru this flow again & causes a recursion
 @Slf4j
+@Secured('permitAll')
 class HomeController {
 
     SessionFactory sessionFactory
     SpringCacheService springCacheService
+
+
+    def verifyLazy() {
+        Session currSession, newSession
+        MyMember m1 = MyMember.findByName("lazy1")
+        MyMember m2
+        MyMember.withSession { Session s -> currSession=s }
+        println "curr session: ${currSession}"
+        MyMember.withNewSession { Session s ->
+            newSession=s
+            m2 = MyMember.findByName("lazy2")
+            println "new session:${newSession}"
+        }
+        println "new session: ${newSession}"
+
+
+        println "m1 ${m1.id},address: ${m1.addresses}"
+        m2.attach()
+        println "m2 ${m2.id} address: ${m2.addresses}"
+
+        render view:'/index', model:[sf:sessionFactory,member:m2,memberList:[]]
+    }
 
     @Secured('ROLE_USER')
     def index() {

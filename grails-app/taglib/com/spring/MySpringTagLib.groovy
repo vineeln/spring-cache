@@ -13,7 +13,6 @@ class MySpringTagLib {
     }
 
     def renderMember = { attrs ->
-
         MyMember m = attrs.member;
         out << "<li>Name: ${m.name}</li>"
         try{
@@ -23,7 +22,5 @@ class MySpringTagLib {
         }catch(Throwable t) {
             out << "<li>address: ${t.toString()}</li>"
         }
-
-
     }
 }
