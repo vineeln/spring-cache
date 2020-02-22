@@ -36,7 +36,6 @@ class HomeController {
 
 
         println "m1 ${m1.id},address: ${m1.addresses}"
-        m2.attach()
         println "m2 ${m2.id} address: ${m2.addresses}"
 
         render view:'/index', model:[sf:sessionFactory,member:m2,memberList:[]]
